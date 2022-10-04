@@ -1,4 +1,4 @@
-package plugin
+package echo
 
 import "github.com/tfaughnan/artoo/client"
 
