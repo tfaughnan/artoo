@@ -1,0 +1,16 @@
+host = "irc.example.net"
+port = 6697
+ssl = true
+nick = "artoo"
+user = "artoo"
+real = "https://github.com/tfaughnan/artoo"
+pass = "hunter2"
+channels = ["#bots"]
+verbose = true
+
+[openai]
+apiurl = "https://api.openai.com/v1"
+key = "g3n3r4t1ngt3xtw1thgPt315fuN"
+model = "text-davinci-002"
+maxtokens = 1024
+temperature = 0.75
