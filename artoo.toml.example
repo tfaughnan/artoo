@@ -14,3 +14,4 @@ key = "g3n3r4t1ngt3xtw1thgPt315fuN"
 model = "text-davinci-002"
 maxtokens = 1024
 temperature = 0.75
+timeout = 60
