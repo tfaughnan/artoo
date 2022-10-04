@@ -120,6 +120,10 @@ func (c *Client) PrintfPrivmsg(target string, format string, args ...any) {
 	}
 }
 
+func (c *Client) PrintRaw(cmd string) {
+	c.w.PrintfLine(cmd)
+}
+
 func dial(addr string, ssl bool) (net.Conn, error) {
 	if ssl {
 		return tls.Dial("tcp", addr, nil)

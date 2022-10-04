@@ -19,6 +19,7 @@ type Config struct {
 	Real     string   `toml:"real"`
 	Pass     string   `toml:"pass"`
 	Channels []string `toml:"channels"`
+	Owner    string   `toml:"owner"`
 	Verbose  bool     `toml:"verbose"`
 
 	// plugin-specific configuration
