@@ -4,7 +4,7 @@ Barebones IRC bot / astromech droid written in Go.
 
 ## Compilation
 
-`cd cmd/artoo && go build`
+`make`
 
 ## Configuration
 
