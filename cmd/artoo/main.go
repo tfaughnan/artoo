@@ -20,8 +20,8 @@ func main() {
 	c.RegisterLineHandler(`^:(?P<server>\S+) 001 (?P<nick>\S+) :(?P<body>.*)$`, c.Handle001)
 	c.RegisterLineHandler(`^PING (?P<token>\S+)$`, c.HandlePing)
 	c.RegisterLineHandler(`^:(?P<nick>\S+)!(?P<user>\S+)@(?P<host>\S+) PRIVMSG (?P<target>\S+) :(?P<body>.*)$`, c.HandlePrivmsg)
-	c.RegisterPluginHandler(echo.EchoPattern, echo.EchoHandler)
-	c.RegisterPluginHandler(openai.OpenaiPattern, openai.OpenaiHandler)
+	c.RegisterPluginHandler(echo.Pattern, echo.Handler)
+	c.RegisterPluginHandler(openai.Pattern, openai.Handler)
 
 	if err := c.Connect(); err != nil {
 		log.Fatal(err)

@@ -16,9 +16,9 @@ import (
 	"github.com/tfaughnan/artoo/style"
 )
 
-var OpenaiPattern = `^\.prompt\s+(?P<prompt>.+)$`
+var Pattern = `^\.prompt\s+(?P<prompt>.+)$`
 
-func OpenaiHandler(c *client.Client, lgroups, bgroups map[string]string) {
+func Handler(c *client.Client, lgroups, bgroups map[string]string) {
 	prompt := bgroups["prompt"]
 	target := lgroups["target"]
 	comp, err := fetchCompletion(c.Cfg.Openai, prompt)
@@ -38,34 +38,33 @@ func OpenaiHandler(c *client.Client, lgroups, bgroups map[string]string) {
 	c.PrintfPrivmsg(target, "%s%s%s", promptReminder, sep, comp)
 }
 
-type openaiReqPayload struct {
+type reqPayload struct {
 	Prompt      string  `json:"prompt"`
 	Model       string  `json:"model"`
 	MaxTokens   int     `json:"max_tokens"`
 	Temperature float32 `json:"temperature"`
 }
 
-type openaiRespPayload struct {
-	ID      string         `json:"id"`
-	Object  string         `json:"object"`
-	Created uint64         `json:"created"`
-	Model   string         `json:"model"`
-	Choices []openaiChoice `json:"choices"`
-	Usage   openaiUsage    `json:"usage"`
+type respPayload struct {
+	ID      string   `json:"id"`
+	Object  string   `json:"object"`
+	Created uint64   `json:"created"`
+	Model   string   `json:"model"`
+	Choices []choice `json:"choices"`
+	Usage   usage    `json:"usage"`
 }
 
-type openaiChoice struct {
+type choice struct {
 	Text  string `json:"text"`
 	Index int    `json:"index"`
 	// LogProbs     LogProbs    `json:"logprobs"`
 	FinishReason string `json:"finish_reason"`
 }
 
-type openaiUsage struct {
-}
+type usage struct{}
 
 func fetchCompletion(cfg config.OpenaiConfig, prompt string) (string, error) {
-	payload := openaiReqPayload{prompt, cfg.Model, cfg.MaxTokens, cfg.Temperature}
+	payload := reqPayload{prompt, cfg.Model, cfg.MaxTokens, cfg.Temperature}
 	payloadJson, err := json.Marshal(payload)
 	if err != nil {
 		return "", err
@@ -96,7 +95,7 @@ func fetchCompletion(cfg config.OpenaiConfig, prompt string) (string, error) {
 		return "", err
 	}
 
-	var results openaiRespPayload
+	var results respPayload
 	if err := json.Unmarshal(bodyBytes, &results); err != nil {
 		return "", err
 	}

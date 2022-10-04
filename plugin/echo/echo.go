@@ -2,8 +2,8 @@ package echo
 
 import "github.com/tfaughnan/artoo/client"
 
-var EchoPattern = `^\.echo\s+(?P<text>.+)$`
+var Pattern = `^\.echo\s+(?P<text>.+)$`
 
-func EchoHandler(c *client.Client, lgroups, bgroups map[string]string) {
+func Handler(c *client.Client, lgroups, bgroups map[string]string) {
 	c.PrintfPrivmsg(lgroups["target"], bgroups["text"])
 }
