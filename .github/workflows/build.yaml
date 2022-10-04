@@ -20,6 +20,3 @@ jobs:
         run: |
           make
 
-      - name: Test format
-        run: |
-          test -z $(gofmt  -l .)
