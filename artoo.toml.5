@@ -1,0 +1,132 @@
+.Dd $Mdocdate$
+.Dt ARTOO.TOML 5
+.Os
+.
+.Sh NAME
+.Nm artoo.toml
+.Nd artoo configuration file
+.
+.Sh DESCRIPTION
+Configuration for
+.Xr artoo 1
+takes the form of a TOML file. General bot configuration
+is done at the top-level of the file, while plugin-specific configuration is done
+inside the appropriately named TOML table.
+.
+.Ss GENERAL
+.
+.Bl -tag -width Ds
+.It Cm host No = Ar host
+Connect to
+.Ar host .
+Default is 127.0.0.1.
+Type is
+.Vt string .
+.It Cm port No = Ar port
+Connect to
+.Ar port .
+Default is 6667.
+Type is
+.Vt int .
+.It Cm ssl No = Ar bool
+Use SSL. Default is false.
+Type is
+.Vt bool .
+.It Cm nick No = Ar nick
+Set nickname to
+.Ar nick .
+Default is artoo.
+Type is
+.Vt string .
+.It Cm user No = Ar user
+Set username to
+.Ar user .
+Default is the value of
+.Ar nick .
+Type is
+.Vt string .
+.It Cm real No = Ar real
+Set real name to
+.Ar real .
+Default is the value of
+.Ar nick .
+Type is
+.Vt string .
+.It Cm pass No = Ar pass
+Set password to
+.Ar pass .
+Default is empty
+.Pq no password authentication .
+Type is
+.Vt string .
+.It Cm channels No = Ar channels
+Join each channel in
+.Ar channels
+list. Default is an empty list.
+Type is
+.Vt []string .
+.It Cm verbose No = Ar bool
+Print verbose output. Default is false.
+Type is
+.Vt bool .
+.El
+.
+.Ss OPENAI
+Configuration for the OpenAI plugin.
+.Bl -tag -width Ds
+.It Cm apiurl No = Ar url
+Set the URL for OpenAI's API to
+.Ar url .
+Type is
+.Vt string .
+.It Cm key No = Ar key
+Set the API key for OpenAI to
+.Ar key .
+Type is
+.Vt string .
+.It Cm model No = Ar model
+Set the OpenAI model to
+.Ar model .
+Type is
+.Vt string .
+.It Cm maxtokens No = Ar maxtokens
+Set the maximum number of completion tokens to
+.Ar maxtokens .
+Type is
+.Vt int .
+.It Cm temperature No = Ar temperature
+Set the model's sampling temperature to
+.Ar temperature .
+Type is
+.Vt float32 .
+.It Cm timeout No = Ar timeout
+Set the HTTP client's timeout to
+.Ar timeout
+seconds.
+Type is
+.Vt int .
+.El
+.
+.Sh FILES
+.Bl -tag -width Ds
+.It Pa ~/.config/artoo.toml
+User-level configuration, tried first if
+.Op Fl c
+not used.
+.It Pa /etc/artoo.toml
+System-wide configuration, tried second if
+.Op Fl c
+not used.
+.It Pa /usr/share/doc/artoo/artoo.toml.example
+Sample configuration.
+.El
+.
+.Sh SEE ALSO
+.Xr artoo 1
+.
+.Sh AUTHORS
+.An Thomas Faughnan Jr. Aq Mt tom@tjf.sh
+.
+.Sh BUGS
+Submit issues and fixes to
+.Lk https://github.com/tfaughnan/artoo

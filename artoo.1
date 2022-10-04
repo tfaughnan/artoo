@@ -1,0 +1,49 @@
+.Dd $Mdocdate$
+.Dt ARTOO 1
+.Os
+.
+.Sh NAME
+.Nm artoo
+.Nd Barebones IRC bot / astromech droid
+.
+.Sh SYNOPSIS
+.Nm artoo
+.Op Fl c Ar config
+.
+.Sh DESCRIPTION
+.Nm
+is an IRC bot which provides fun utilities for your channels.
+It takes one optional argument,
+.Op Fl c ,
+the path to a configuration file.
+When left unspecified, configuration is read from
+.Pa ~/.config/artoo.toml
+if it exists, otherwise
+.Pa /etc/artoo.toml .
+.
+.Ss PLUGINS
+Interaction with the bot is accomplished via
+.Qq plugins ,
+which typically have an associated command and arguments.
+Sending properly formatted commands to channels
+.Pq or direct messages
+in which the bot is present results in the bot performing some action, usually
+sending back some relevant textual response.
+.
+.Bl -tag -width Ds
+.It Ic .echo Ar text
+Echo the text back.
+.It Ic .prompt Ar prompt
+Fetch a completion for the prompt from
+.Lk https://openai.com/api/ OpenAI .
+.El
+.
+.Sh SEE ALSO
+.Xr artoo.toml 5
+.
+.Sh AUTHORS
+.An Thomas Faughnan Jr. Aq Mt tom@tjf.sh
+.
+.Sh BUGS
+Submit issues and fixes to
+.Lk https://github.com/tfaughnan/artoo
