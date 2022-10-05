@@ -1,3 +1,5 @@
 artoo
 artoo.toml
 scratch/
+*.tgz
+*.tar.gz
