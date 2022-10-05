@@ -33,7 +33,7 @@ func Handler(c *client.Client, lgroups, bgroups map[string]string) {
 		// if multiline completion, print prompt on own line for aesthetics
 		sep = "\n"
 	}
-	promptReminder := fmt.Sprintf("%s%s[%s%s%s]:%s", style.Color, style.Grey,
+	promptReminder := fmt.Sprintf("%s%s[%s%s%s]:%s", style.Color, style.Blue,
 		style.Italics, prompt, style.Italics, style.Reset)
 	c.PrintfPrivmsg(target, "%s%s%s", promptReminder, sep, comp)
 }
