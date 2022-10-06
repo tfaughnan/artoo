@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+
+name=artoo
+description="IRC bot"
+supervisor=supervise-daemon
+command=/usr/bin/artoo
+command_args="$artoo_opts"
+command_user=artoo
+output_log="/var/log/artoo.log"
+error_log="/var/log/artoo.log"
+
+depend() {
+	need net
+	after firewall
+}
+
+start_pre() {
+	checkpath -f -o "$command_user" "$output_log"
+}
