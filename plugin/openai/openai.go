@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 	"time"
 
@@ -16,9 +17,16 @@ import (
 	"github.com/tfaughnan/artoo/style"
 )
 
-var Pattern = `^\.prompt\s+(?P<prompt>.+)$`
+var pattern = regexp.MustCompile(`^\.prompt\s+(?P<prompt>.+)$`)
+var Plugin = client.Plugin{
+	Pattern: pattern,
+	Handler: handler,
+	Name:    "openai",
+	Desc:    "Fetch a completion for the prompt from OpenAI.",
+	Usage:   ".prompt <prompt>",
+}
 
-func Handler(c *client.Client, lgroups, bgroups map[string]string) {
+func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	prompt := bgroups["prompt"]
 	target := lgroups["target"]
 

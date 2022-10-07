@@ -16,22 +16,22 @@ import (
 var IrcMaxBytes = 512
 
 type LineHandler func(lgroups map[string]string)
-type PluginHandler func(c *Client, lgroups, bgroups map[string]string)
 
 type Client struct {
-	Cfg            config.Config
-	conn           net.Conn
-	r              *textproto.Reader
-	w              *textproto.Writer
-	lineHandlers   map[*regexp.Regexp]LineHandler
-	pluginHandlers map[*regexp.Regexp]PluginHandler
+	cfgPath      string // XXX: filepath type instead?
+	Cfg          config.Config
+	conn         net.Conn
+	r            *textproto.Reader
+	w            *textproto.Writer
+	lineHandlers map[*regexp.Regexp]LineHandler // XXX
+	plugins      []Plugin
 }
 
 func NewClient(cfg config.Config) *Client {
 	c := Client{}
 	c.Cfg = cfg
 	c.lineHandlers = make(map[*regexp.Regexp]LineHandler)
-	c.pluginHandlers = make(map[*regexp.Regexp]PluginHandler)
+	c.plugins = make([]Plugin, 0)
 	return &c
 }
 
@@ -78,9 +78,8 @@ func (c *Client) RegisterLineHandler(pattern string, fn LineHandler) {
 	c.lineHandlers[re] = fn
 }
 
-func (c *Client) RegisterPluginHandler(pattern string, fn PluginHandler) {
-	re := regexp.MustCompile(pattern)
-	c.pluginHandlers[re] = fn
+func (c *Client) RegisterPlugin(p Plugin) {
+	c.plugins = append(c.plugins, p)
 }
 
 func (c *Client) Handle001(lgroups map[string]string) {
@@ -98,9 +97,9 @@ func (c *Client) HandlePrivmsg(lgroups map[string]string) {
 		lgroups["target"] = lgroups["nick"] // for direct messages
 	}
 
-	for re := range c.pluginHandlers {
-		if bgroups := matchGroups(re, lgroups["body"]); bgroups != nil {
-			c.pluginHandlers[re](c, lgroups, bgroups)
+	for _, p := range c.plugins {
+		if bgroups := matchGroups(p.Pattern, lgroups["body"]); bgroups != nil {
+			p.Handler(c, lgroups, bgroups)
 		}
 	}
 }

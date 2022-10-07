@@ -4,13 +4,21 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"regexp"
 
 	"github.com/tfaughnan/artoo/client"
 	"github.com/tfaughnan/artoo/config"
 	"github.com/tfaughnan/artoo/style"
 )
 
-var Pattern = `^\.kino\s+(?P<query>.+)$`
+var pattern = regexp.MustCompile(`^\.kino\s+(?P<query>.+)$`)
+var Plugin = client.Plugin{
+	Pattern: pattern,
+	Handler: handler,
+	Name:    "tmdb",
+	Desc:    "Search for movies on TMDB",
+	Usage:   ".kino <query>",
+}
 
 // TODO: TV shows too?
 // TODO: optionally specify (n) to get nth search result (like !ud)
@@ -38,7 +46,7 @@ type movie struct {
 
 // TODO: get search result _and_ query its ID?
 
-func Handler(c *client.Client, lgroups, bgroups map[string]string) {
+func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	query := bgroups["query"]
 	target := lgroups["target"]
 

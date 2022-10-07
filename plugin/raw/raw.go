@@ -2,13 +2,21 @@ package raw
 
 import (
 	"log"
+	"regexp"
 
 	"github.com/tfaughnan/artoo/client"
 )
 
-var Pattern = `^\.raw\s+(?P<cmd>.+)$`
+var pattern = regexp.MustCompile(`^\.raw\s+(?P<cmd>.+)$`)
+var Plugin = client.Plugin{
+	Pattern: pattern,
+	Handler: handler,
+	Name:    "raw",
+	Desc:    "Send a raw command to the IRC connection socket (owner-only).",
+	Usage:   ".raw <command>",
+}
 
-func Handler(c *client.Client, lgroups, bgroups map[string]string) {
+func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	nick := lgroups["nick"]
 	cmd := bgroups["cmd"]
 	if nick != c.Cfg.Owner {

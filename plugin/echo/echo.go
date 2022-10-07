@@ -1,9 +1,20 @@
 package echo
 
-import "github.com/tfaughnan/artoo/client"
+import (
+	"regexp"
 
-var Pattern = `^\.echo\s+(?P<text>.+)$`
+	"github.com/tfaughnan/artoo/client"
+)
 
-func Handler(c *client.Client, lgroups, bgroups map[string]string) {
+var pattern = regexp.MustCompile(`^\.echo\s+(?P<text>.+)$`)
+var Plugin = client.Plugin{
+	Pattern: pattern,
+	Handler: handler,
+	Name:    "echo",
+	Desc:    "Echo text back.",
+	Usage:   ".echo <text>",
+}
+
+func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	c.PrintfPrivmsg(lgroups["target"], bgroups["text"])
 }
