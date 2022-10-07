@@ -46,7 +46,7 @@ func (c *Client) Connect() error {
 	c.w = textproto.NewWriter(bufio.NewWriter(conn))
 
 	if c.Cfg.Pass != "" {
-		c.w.PrintfLine("PASS %s", c.Cfg.Pass)
+		c.w.PrintfLine("PASS %s:%s", c.Cfg.Nick, c.Cfg.Pass)
 	}
 	c.w.PrintfLine("NICK %s", c.Cfg.Nick)
 	c.w.PrintfLine("USER %s 0 * %s", c.Cfg.User, c.Cfg.Real)
