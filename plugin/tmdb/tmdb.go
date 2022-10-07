@@ -20,20 +20,6 @@ var Plugin = client.Plugin{
 	Usage:   ".kino <query>",
 }
 
-// TODO: TV shows too?
-// TODO: optionally specify (n) to get nth search result (like !ud)
-// TODO: primary_release_year thing
-// TODO: -v flag to give LOTS of info
-
-// .kino the room =>
-// <em>The Room</em> (2003) dir. Tommy Wiseau <red>[4.1/10]</red> @ https://u.tjf.sh/8d133
-
-// .kino the new world =>
-// <em>The New World</em> (2005) dir. Terrence Malick <orange>[6.5/10]</orange> @ https://u.tjf.sh/c91b
-
-// .kino godfather =>
-// <em>The Godfather</em> (1972) dir. Francis Ford Coppola <green>[8.7/10]</green> @ https://u.tjf.sh/a3f01
-
 type movie struct {
 	ID          int
 	Title       string
@@ -43,8 +29,6 @@ type movie struct {
 	RatingColor string
 	URL         string
 }
-
-// TODO: get search result _and_ query its ID?
 
 func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	query := bgroups["query"]
