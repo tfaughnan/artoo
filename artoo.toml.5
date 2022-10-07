@@ -65,21 +65,32 @@ Join each channel in
 list. Default is an empty list.
 Type is
 .Vt []string .
+.It Cm owner No = Ar owner
+Set owner nickname to
+.Ar owner .
+Type is
+.Vt string .
 .It Cm verbose No = Ar bool
 Print verbose output. Default is false.
 Type is
 .Vt bool .
+.It Cm http_timeout No = Ar timeout
+Set timeout for HTTP requests to
+.Ar timeout
+seconds. Default is 60.
+Type is
+.Vt int .
 .El
 .
 .Ss OPENAI
 Configuration for the OpenAI plugin.
 .Bl -tag -width Ds
-.It Cm apiurl No = Ar url
-Set the URL for OpenAI's API to
+.It Cm api_url No = Ar url
+Set the URL for the OpenAI API to
 .Ar url .
 Type is
 .Vt string .
-.It Cm key No = Ar key
+.It Cm api_key No = Ar key
 Set the API key for OpenAI to
 .Ar key .
 Type is
@@ -105,6 +116,21 @@ Set the HTTP client's timeout to
 seconds.
 Type is
 .Vt int .
+.El
+.
+.Ss TMDB
+Configuration for the TMDB plugin.
+.Bl -tag -width Ds
+.It Cm api_url No = Ar url
+Set the URL for the TMDB API to
+.Ar url .
+Type is
+.Vt string .
+.It Cm api_key No = Ar key
+Set the API key for TMDB to
+.Ar key .
+Type is
+.Vt string .
 .El
 .
 .Sh FILES
