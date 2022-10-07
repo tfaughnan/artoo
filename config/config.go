@@ -11,28 +11,34 @@ import (
 )
 
 type Config struct {
-	Host     string   `toml:"host"`
-	Port     int      `toml:"port"`
-	SSL      bool     `toml:"ssl"`
-	Nick     string   `toml:"nick"`
-	User     string   `toml:"user"`
-	Real     string   `toml:"real"`
-	Pass     string   `toml:"pass"`
-	Channels []string `toml:"channels"`
-	Owner    string   `toml:"owner"`
-	Verbose  bool     `toml:"verbose"`
+	Host        string   `toml:"host"`
+	Port        int      `toml:"port"`
+	SSL         bool     `toml:"ssl"`
+	Nick        string   `toml:"nick"`
+	User        string   `toml:"user"`
+	Real        string   `toml:"real"`
+	Pass        string   `toml:"pass"`
+	Channels    []string `toml:"channels"`
+	Owner       string   `toml:"owner"`
+	Verbose     bool     `toml:"verbose"`
+	HttpTimeout int      `toml:"http_timeout"`
 
 	// plugin-specific configuration
 	Openai OpenaiConfig `toml:"openai"`
+	Tmdb   TmdbConfig   `toml:"tmdb"`
 }
 
 type OpenaiConfig struct {
-	ApiURL      string  `toml:"apiurl"`
-	Key         string  `toml:"key"`
+	ApiURL      string  `toml:"api_url"`
+	ApiKey      string  `toml:"api_key"`
 	Model       string  `toml:"model"`
-	MaxTokens   int     `toml:"maxtokens"`
+	MaxTokens   int     `toml:"max_tokens"`
 	Temperature float32 `toml:"temperature"`
-	Timeout     int     `toml:"timeout"`
+}
+
+type TmdbConfig struct {
+	ApiURL string `toml:"api_url"`
+	ApiKey string `toml:"api_key"`
 }
 
 func LoadConfig() (Config, error) {
@@ -93,7 +99,11 @@ func setDefaults(cfg *Config, md toml.MetaData) {
 	if !md.IsDefined("channels") {
 		cfg.Channels = []string{}
 	}
+	// TODO: default owner?
 	if !md.IsDefined("verbose") {
 		cfg.Verbose = false
+	}
+	if !md.IsDefined("http_timeout") {
+		cfg.HttpTimeout = 60
 	}
 }

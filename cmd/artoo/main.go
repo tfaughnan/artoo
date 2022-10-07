@@ -8,6 +8,7 @@ import (
 	"github.com/tfaughnan/artoo/plugin/echo"
 	"github.com/tfaughnan/artoo/plugin/openai"
 	"github.com/tfaughnan/artoo/plugin/raw"
+	"github.com/tfaughnan/artoo/plugin/tmdb"
 )
 
 func main() {
@@ -24,6 +25,7 @@ func main() {
 	c.RegisterPluginHandler(echo.Pattern, echo.Handler)
 	c.RegisterPluginHandler(openai.Pattern, openai.Handler)
 	c.RegisterPluginHandler(raw.Pattern, raw.Handler)
+	c.RegisterPluginHandler(tmdb.Pattern, tmdb.Handler)
 
 	if err := c.Connect(); err != nil {
 		log.Fatal(err)
