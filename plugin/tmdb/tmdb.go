@@ -17,6 +17,7 @@ var Plugin = client.Plugin{
 	Name:    "tmdb",
 	Desc:    "Search for movies on TMDB",
 	Usage:   ".kino <query>",
+	Example: ".kino godfather part ii",
 }
 
 type movie struct {

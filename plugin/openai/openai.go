@@ -24,6 +24,7 @@ var Plugin = client.Plugin{
 	Name:    "openai",
 	Desc:    "Fetch a completion for the prompt from OpenAI.",
 	Usage:   ".prompt <prompt>",
+	Example: ".prompt Write a haiku about IRC",
 }
 
 func handler(c *client.Client, lgroups, bgroups map[string]string) {

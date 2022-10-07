@@ -11,8 +11,9 @@ var Plugin = client.Plugin{
 	Pattern: pattern,
 	Handler: handler,
 	Name:    "echo",
-	Desc:    "Echo text back.",
+	Desc:    "Echo text back",
 	Usage:   ".echo <text>",
+	Example: ".echo hello world",
 }
 
 func handler(c *client.Client, lgroups, bgroups map[string]string) {

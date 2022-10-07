@@ -9,4 +9,5 @@ type Plugin struct {
 	Name    string
 	Desc    string
 	Usage   string
+	Example string
 }

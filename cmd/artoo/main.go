@@ -6,6 +6,7 @@ import (
 	"github.com/tfaughnan/artoo/client"
 	"github.com/tfaughnan/artoo/config"
 	"github.com/tfaughnan/artoo/plugin/echo"
+	"github.com/tfaughnan/artoo/plugin/help"
 	"github.com/tfaughnan/artoo/plugin/openai"
 	"github.com/tfaughnan/artoo/plugin/raw"
 	"github.com/tfaughnan/artoo/plugin/tmdb"
@@ -27,6 +28,7 @@ func main() {
 	c.RegisterPlugin(openai.Plugin)
 	c.RegisterPlugin(raw.Plugin)
 	c.RegisterPlugin(tmdb.Plugin)
+	c.RegisterPlugin(help.Plugin)
 
 	if err := c.Connect(); err != nil {
 		log.Fatal(err)

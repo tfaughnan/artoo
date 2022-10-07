@@ -24,14 +24,14 @@ type Client struct {
 	r            *textproto.Reader
 	w            *textproto.Writer
 	lineHandlers map[*regexp.Regexp]LineHandler // XXX
-	plugins      []Plugin
+	Plugins      []Plugin
 }
 
 func NewClient(cfg config.Config) *Client {
 	c := Client{}
 	c.Cfg = cfg
 	c.lineHandlers = make(map[*regexp.Regexp]LineHandler)
-	c.plugins = make([]Plugin, 0)
+	c.Plugins = make([]Plugin, 0)
 	return &c
 }
 
@@ -79,7 +79,7 @@ func (c *Client) RegisterLineHandler(pattern string, fn LineHandler) {
 }
 
 func (c *Client) RegisterPlugin(p Plugin) {
-	c.plugins = append(c.plugins, p)
+	c.Plugins = append(c.Plugins, p)
 }
 
 func (c *Client) Handle001(lgroups map[string]string) {
@@ -97,7 +97,7 @@ func (c *Client) HandlePrivmsg(lgroups map[string]string) {
 		lgroups["target"] = lgroups["nick"] // for direct messages
 	}
 
-	for _, p := range c.plugins {
+	for _, p := range c.Plugins {
 		if bgroups := matchGroups(p.Pattern, lgroups["body"]); bgroups != nil {
 			p.Handler(c, lgroups, bgroups)
 		}

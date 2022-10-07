@@ -14,6 +14,7 @@ var Plugin = client.Plugin{
 	Name:    "raw",
 	Desc:    "Send a raw command to the IRC connection socket (owner-only).",
 	Usage:   ".raw <command>",
+	Example: ".raw JOIN #bots",
 }
 
 func handler(c *client.Client, lgroups, bgroups map[string]string) {
