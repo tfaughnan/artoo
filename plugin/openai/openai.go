@@ -21,7 +21,8 @@ var Pattern = `^\.prompt\s+(?P<prompt>.+)$`
 func Handler(c *client.Client, lgroups, bgroups map[string]string) {
 	prompt := bgroups["prompt"]
 	target := lgroups["target"]
-	comp, err := fetchCompletion(c.Cfg.Openai, prompt)
+
+	comp, err := fetchCompletion(c.Cfg.Openai, c.Cfg.HttpTimeout, prompt)
 	if err != nil {
 		log.Println(err)
 		c.PrintfPrivmsg(target, "Request failed: %v", err)
@@ -63,7 +64,7 @@ type choice struct {
 
 type usage struct{}
 
-func fetchCompletion(cfg config.OpenaiConfig, prompt string) (string, error) {
+func fetchCompletion(cfg config.OpenaiConfig, timeout int, prompt string) (string, error) {
 	payload := reqPayload{prompt, cfg.Model, cfg.MaxTokens, cfg.Temperature}
 	payloadJson, err := json.Marshal(payload)
 	if err != nil {
@@ -76,9 +77,9 @@ func fetchCompletion(cfg config.OpenaiConfig, prompt string) (string, error) {
 		return "", err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", cfg.Key))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", cfg.ApiKey))
 
-	client := http.Client{Timeout: time.Duration(cfg.Timeout) * time.Second}
+	client := http.Client{Timeout: time.Duration(timeout) * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
@@ -90,12 +91,12 @@ func fetchCompletion(cfg config.OpenaiConfig, prompt string) (string, error) {
 	}
 
 	defer resp.Body.Close()
-	bodyBytes, err := io.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body) // TODO: change name
 	if err != nil {
 		return "", err
 	}
 
-	var results respPayload
+	var results respPayload // TODO: change names
 	if err := json.Unmarshal(bodyBytes, &results); err != nil {
 		return "", err
 	}
