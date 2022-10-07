@@ -7,6 +7,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/tfaughnan/artoo/config"
@@ -59,6 +61,11 @@ type creditsPerson struct {
 func fetchSearch(cfg config.TmdbConfig, timeout int, query string) (searchResponse, error) {
 	v := url.Values{}
 	v.Set("api_key", cfg.ApiKey)
+	if ok, err := regexp.MatchString(`\([0-9]{4}\)$`, query); ok && err == nil {
+		l := len(query)
+		v.Set("primary_release_year", query[l-5:l-1])
+		query = strings.TrimSpace(query[:l-5])
+	}
 	v.Set("query", query)
 	u := fmt.Sprintf("%s/search/movie?%s", cfg.ApiURL, v.Encode())
 	req, err := http.NewRequest(http.MethodGet, u, nil)

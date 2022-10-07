@@ -1,7 +1,6 @@
 package tmdb
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"regexp"
@@ -39,6 +38,9 @@ func handler(c *client.Client, lgroups, bgroups map[string]string) {
 		log.Println(err)
 		c.PrintfPrivmsg(target, "%v", err)
 		return
+	} else if m == (movie{}) {
+		c.PrintfPrivmsg(target, "No results")
+		return
 	}
 
 	c.PrintfPrivmsg(target, "%s%s%s%s (%s)%s dir. %s %s%s[%.1f/10]%s @ %s",
@@ -52,7 +54,7 @@ func fetchMovie(cfg config.TmdbConfig, timeout int, query string) (movie, error)
 	if err != nil {
 		return movie{}, err
 	} else if sresp.TotalResults == 0 {
-		return movie{}, errors.New("No results")
+		return movie{}, nil
 	}
 
 	res := sresp.Results[0]
