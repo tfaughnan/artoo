@@ -6,6 +6,7 @@ supervisor=supervise-daemon
 command=/usr/bin/artoo
 command_args="$artoo_opts"
 command_user=artoo
+respawn_delay=6
 output_log="/var/log/artoo.log"
 error_log="/var/log/artoo.log"
 
