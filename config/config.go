@@ -26,6 +26,7 @@ type Config struct {
 	// plugin-specific configuration
 	Openai OpenaiConfig `toml:"openai"`
 	Tmdb   TmdbConfig   `toml:"tmdb"`
+	Domain DomainConfig `toml:"domain"`
 }
 
 type OpenaiConfig struct {
@@ -39,6 +40,12 @@ type OpenaiConfig struct {
 type TmdbConfig struct {
 	ApiURL string `toml:"api_url"`
 	ApiKey string `toml:"api_key"`
+}
+
+type DomainConfig struct {
+	ApiURL   string `toml:"api_url"`
+	ApiKey   string `toml:"api_key"`
+	Currency string `toml:"currency"`
 }
 
 func LoadConfig() (Config, error) {

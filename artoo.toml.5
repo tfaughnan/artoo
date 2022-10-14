@@ -133,6 +133,26 @@ Type is
 .Vt string .
 .El
 .
+.Ss DOMAIN
+Configuration for the domain plugin.
+.Bl -tag -width Ds
+.It Cm api_url No = Ar url
+Set the URL for the Gandi API to
+.Ar url .
+Type is
+.Vt string .
+.It Cm api_key No = Ar key
+Set the API key for Gandi to
+.Ar key .
+Type is
+.Vt string .
+.It Cm currency No = Ar currency
+Set the ISO currency code for domain prices to
+.Ar currency .
+Type is
+.Vt string .
+.El
+.
 .Sh FILES
 .Bl -tag -width Ds
 .It Pa ~/.config/artoo.toml
