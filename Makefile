@@ -1,12 +1,13 @@
 GO ?= go
 GOFLAGS ?= -tags netgo
-SOURCES = $(shell find . -type f -name '*.go')
+GOSRC != find . -type f -name '*.go'
+GOSRC += go.mod go.sum
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 MANDIR ?= $(PREFIX)/share/man
 DOCDIR ?= $(PREFIX)/share/doc
 
-artoo: $(SOURCES)
+artoo: $(GOSRC)
 	$(GO) build $(GOFLAGS) -o $@ cmd/artoo/main.go
 
 install: artoo artoo.1 artoo.toml.5 artoo.toml.example
