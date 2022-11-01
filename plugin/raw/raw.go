@@ -18,10 +18,10 @@ var Plugin = client.Plugin{
 }
 
 func handler(c *client.Client, lgroups, bgroups map[string]string) {
-	nick := lgroups["nick"]
+	user := lgroups["user"]
 	cmd := bgroups["cmd"]
-	if nick != c.Cfg.Owner {
-		log.Printf("Unauthorized raw command from <%s>: %s\n", nick, cmd)
+	if user != c.Cfg.Owner {
+		log.Printf("Unauthorized raw command from <%s>: %s\n", user, cmd)
 		c.PrintfPrivmsg(lgroups["target"], "Unauthorized")
 	} else {
 		c.PrintRaw(cmd)

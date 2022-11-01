@@ -24,7 +24,7 @@ func main() {
 
 	c.RegisterLineHandler(`^:(?P<server>\S+) 001 (?P<nick>\S+) :(?P<body>.*)$`, c.Handle001)
 	c.RegisterLineHandler(`^PING (?P<token>\S+)$`, c.HandlePing)
-	c.RegisterLineHandler(`^:(?P<nick>\S+)!(?P<user>\S+)@(?P<host>\S+) PRIVMSG (?P<target>\S+) :(?P<body>.*)$`, c.HandlePrivmsg)
+	c.RegisterLineHandler(`^:(?P<nick>\S+)![~@%+]?(?P<user>\S+)@(?P<host>\S+) PRIVMSG (?P<target>\S+) :(?P<body>.*)$`, c.HandlePrivmsg)
 
 	c.RegisterPlugin(echo.Plugin)
 	c.RegisterPlugin(openai.Plugin)
