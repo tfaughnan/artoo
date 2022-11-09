@@ -3,6 +3,7 @@ package domain
 import (
 	"log"
 	"regexp"
+	"strings"
 
 	"github.com/tfaughnan/artoo/client"
 	"github.com/tfaughnan/artoo/style"
@@ -22,7 +23,7 @@ func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	query := bgroups["query"]
 	target := lgroups["target"]
 
-	dr, err := fetchDomain(c.Cfg.Domain, c.Cfg.HttpTimeout, query)
+	dr, err := fetchDomain(c.Cfg.Domain, c.Cfg.HttpTimeout, strings.TrimSpace(query))
 	if err != nil {
 		log.Println(err)
 		c.PrintfPrivmsg(target, "%s%s%v%s", style.Color, style.Red, err, style.Reset)
