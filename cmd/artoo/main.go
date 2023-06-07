@@ -12,6 +12,7 @@ import (
 	"github.com/tfaughnan/artoo/plugin/openai"
 	"github.com/tfaughnan/artoo/plugin/raw"
 	"github.com/tfaughnan/artoo/plugin/tmdb"
+	"github.com/tfaughnan/artoo/plugin/tv"
 )
 
 func main() {
@@ -30,6 +31,7 @@ func main() {
 	c.RegisterPlugin(openai.Plugin)
 	c.RegisterPlugin(raw.Plugin)
 	c.RegisterPlugin(tmdb.Plugin)
+	c.RegisterPlugin(tv.Plugin)
 	c.RegisterPlugin(help.Plugin)
 	c.RegisterPlugin(bonk.Plugin)
 	c.RegisterPlugin(domain.Plugin)
