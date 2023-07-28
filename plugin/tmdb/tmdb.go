@@ -44,9 +44,16 @@ func handler(c *client.Client, lgroups, bgroups map[string]string) {
 		return
 	}
 
-	c.PrintfPrivmsg(target, "%s%s%s%s (%s)%s dir. %s %s%s[%.1f/10]%s @ %s",
+	var ratingText string
+	if m.Rating > 0 {
+		ratingText = fmt.Sprintf("%.1f", m.Rating)
+	} else {
+		ratingText = "-"
+	}
+
+	c.PrintfPrivmsg(target, "%s%s%s%s (%s)%s dir. %s %s%s[%s/10]%s @ %s",
 		style.Color, style.Blue, style.Bold, m.Title, m.Year, style.Reset,
-		m.Director, style.Color, m.RatingColor, m.Rating, style.Reset,
+		m.Director, style.Color, m.RatingColor, ratingText, style.Reset,
 		m.URL)
 }
 
@@ -67,6 +74,9 @@ func fetchMovie(cfg config.TmdbConfig, timeout int, query string) (movie, error)
 	m.URL = fmt.Sprintf("https://www.themoviedb.org/movie/%d", res.ID)
 
 	switch {
+	case res.VoteCount == 0:
+		m.RatingColor = style.Grey
+		m.Rating = -1
 	case res.VoteAverage < 5:
 		m.RatingColor = style.Red
 	case res.VoteAverage < 7.5:
