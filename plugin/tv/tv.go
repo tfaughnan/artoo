@@ -46,7 +46,8 @@ func handler(c *client.Client, lgroups, bgroups map[string]string) {
 	}
 
 	c.PrintfPrivmsg(target, "%s%s%s%s (%s)%s  %s%s[%.1f/10]%s @ %s",
-		style.Color, style.Blue, style.Bold, m.Title, m.Year, style.Reset, style.Color, m.RatingColor, m.Rating, style.Reset,
+		style.Color, style.Blue, style.Bold, m.Title, m.Year, style.Reset,
+		style.Color, m.RatingColor, m.Rating, style.Reset,
 		m.URL)
 	c.PrintfPrivmsg(target, "%sOverview:%s %s", style.Bold, style.Reset, m.Overview)
 }

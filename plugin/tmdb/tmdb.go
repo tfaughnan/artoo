@@ -28,6 +28,7 @@ type movie struct {
 	Rating      float32
 	RatingColor string
 	URL         string
+	Overview    string
 }
 
 func handler(c *client.Client, lgroups, bgroups map[string]string) {
@@ -55,6 +56,7 @@ func handler(c *client.Client, lgroups, bgroups map[string]string) {
 		style.Color, style.Blue, style.Bold, m.Title, m.Year, style.Reset,
 		m.Director, style.Color, m.RatingColor, ratingText, style.Reset,
 		m.URL)
+	c.PrintfPrivmsg(target, "%sOverview:%s %s", style.Bold, style.Reset, m.Overview)
 }
 
 func fetchMovie(cfg config.TmdbConfig, timeout int, query string) (movie, error) {
@@ -96,6 +98,8 @@ func fetchMovie(cfg config.TmdbConfig, timeout int, query string) (movie, error)
 			break
 		}
 	}
+
+	m.Overview = res.Overview
 
 	return m, nil
 }
