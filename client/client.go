@@ -13,7 +13,7 @@ import (
 	"github.com/tfaughnan/artoo/config"
 )
 
-var IrcMaxBytes = 512
+var IrcMaxBytes = 400
 
 type LineHandler func(lgroups map[string]string)
 
